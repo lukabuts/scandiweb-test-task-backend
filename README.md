@@ -20,9 +20,11 @@ A lightweight PHP GraphQL backend designed to support a product-based applicatio
 
 - **PHP**
 - **GraphQL-PHP**: [webonyx/graphql-php](https://github.com/webonyx/graphql-php)
-- **Illuminate Database** (Eloquent ORM)
+- **Illuminate Database** (Eloquent ORM)  
 - **MySQL** (or any database supported by Illuminate)
 - **Composer** for dependency management
+- **nikic/fast-route**: A fast routing library for PHP
+- **vlucas/phpdotenv**: A zero-dependency library for loading environment variables from `.env` files
 
 ---
 
