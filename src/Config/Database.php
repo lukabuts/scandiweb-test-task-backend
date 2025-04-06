@@ -9,7 +9,7 @@ class Database
 {
     private static $connection = null;
 
-    public static function getConnection()
+    public static function getConnection(): Capsule
     {
         if (self::$connection === null) {
             try {
@@ -45,7 +45,7 @@ class Database
         return self::$connection;
     }
 
-    public static function closeConnection()
+    public static function closeConnection(): void
     {
         self::$connection = null;
     }
