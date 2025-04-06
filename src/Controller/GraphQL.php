@@ -10,8 +10,10 @@ use GraphQL\Type\SchemaConfig;
 use RuntimeException;
 use Throwable;
 
-class GraphQL {
-    static public function handle() {
+class GraphQL
+{
+    public static function handle()
+    {
         try {
             $queryType = new ObjectType([
                 'name' => 'Query',
