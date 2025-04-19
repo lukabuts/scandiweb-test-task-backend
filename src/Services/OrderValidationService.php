@@ -24,7 +24,7 @@ class OrderValidationService
         }
 
         // Check if product is in stock
-        if (!$product->inStock) {
+        if (!$product->in_stock) {
             return $this->validationError($product_id, "Product is out of stock.");
         }
 

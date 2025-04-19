@@ -47,7 +47,7 @@ class GraphQLSchema
                     'type' => Types::orderMutation(),
                     'args' => [
                         'products' => Type::listOf(Type::nonNull(new InputObjectType([
-                            'name' => 'ProductInput',
+                            'name' => 'OrderProductInput',
                             'fields' => [
                                 'product_id' => Type::nonNull(Type::string()),
                                 'attributes' => Type::listOf(Type::nonNull(new InputObjectType([

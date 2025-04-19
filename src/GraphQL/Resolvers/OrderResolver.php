@@ -20,6 +20,13 @@ class OrderResolver
         try {
             $seenProducts = [];
 
+            if ($args['products'] === null || count($args['products']) === 0) {
+                return MessageResponse::create(
+                    false,
+                    "No products provided for the order."
+                );
+            }
+            
             foreach ($args['products'] as $product) {
                 // Extract product arguments
                 $product_id = $product['product_id'];
