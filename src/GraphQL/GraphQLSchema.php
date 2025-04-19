@@ -58,7 +58,6 @@ class GraphQLSchema
                                     ],
                                 ]))),
                                 'quantity' => Type::nonNull(Type::int()),
-                                'price_id' => Type::nonNull(Type::int()),
                             ]
                         ]))),
                     ],

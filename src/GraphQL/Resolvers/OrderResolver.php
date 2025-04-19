@@ -4,7 +4,7 @@ namespace App\GraphQL\Resolvers;
 
 use App\Helpers\MessageResponse;
 use App\Models\Order;
-use App\Models\Price;
+use App\Models\Product;
 use App\Services\OrderValidationService;
 use Exception;
 
@@ -25,16 +25,15 @@ class OrderResolver
                 $product_id = $product['product_id'];
                 $attributes = $product['attributes'];
                 $quantity = $product['quantity'];
-                $price_id = $product['price_id'];
 
                 // Check for duplicate products
                 $attributesKey = collect($attributes)->sortBy('attribute_id')->pluck('item_id')->join('-');
-                $uniqueKey = "$product_id-$attributesKey-$price_id";
+                $uniqueKey = "$product_id-$attributesKey";
 
                 if (isset($seenProducts[$uniqueKey])) {
                     return MessageResponse::create(
                         false,
-                        "Duplicate product found: $product_id with attributes $attributesKey"
+                        "Duplicate product found: $product_id" . ($attributes ? " with attributes $attributesKey" : "")
                     );
                 }
 
@@ -45,14 +44,14 @@ class OrderResolver
                     $product_id,
                     $attributes,
                     $quantity,
-                    $price_id
                 );
 
                 if (!$validationResult['success']) {
                     return $validationResult;
                 }
 
-                $product_price = Price::find($price_id);
+                $product_price = Product::find($product_id)->prices->first();
+
                 $total_price = round($product_price->amount * $quantity, 2);
 
                 // Create a new order instance

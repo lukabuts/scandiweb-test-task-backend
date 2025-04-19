@@ -14,26 +14,26 @@ class OrderValidationService
         return MessageResponse::create(false, "Product '$product_id' validation failed: $message");
     }
 
-    public function validateProductAttributeItem(string $product_id, array $attributes, int $quantity, float $price_id): array
+    public function validateProductAttributeItem(string $product_id, array $attributes, int $quantity): array
     {
         $product = Product::find($product_id);
-        
-        $attribute_ids = array_column($attributes, 'attribute_id');
-        $item_ids = array_column($attributes, 'item_id');
-
-        // Ensure total price is valid
-        if (!$product->prices->contains('id', $price_id)) {
-            return $this->validationError($product_id, "Invalid price selection.");
-        }
-
-        // Ensure quantity is valid
-        if ($quantity <= 0) {
-            return $this->validationError($product_id, "Quantity must be at least 1.");
-        }
 
         // Check if product exists
         if (!$product) {
             return $this->validationError($product_id, "Not found.");
+        }
+
+        // Check if product is in stock
+        if (!$product->inStock) {
+            return $this->validationError($product_id, "Product is out of stock.");
+        }
+
+        $attribute_ids = array_column($attributes, 'attribute_id');
+        $item_ids = array_column($attributes, 'item_id');
+
+        // Ensure quantity is valid
+        if ($quantity <= 0) {
+            return $this->validationError($product_id, "Quantity must be at least 1.");
         }
 
         $productAttributes = $product->attributes->pluck('id')->toArray();
