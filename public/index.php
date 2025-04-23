@@ -2,7 +2,22 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-header("Access-Control-Allow-Origin: *");
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
+// Load allowed origins from .env and parse them
+$allowedOrigins = explode(',', $_ENV['ALLOWED_ORIGINS'] ?? '');
+$requestOrigin = $_SERVER['HTTP_ORIGIN'] ?? '';
+
+if (in_array($requestOrigin, $allowedOrigins)) {
+    header("Access-Control-Allow-Origin: $requestOrigin");
+    header("Access-Control-Allow-Credentials: true");
+} else {
+    header("Access-Control-Allow-Origin: null");
+}
+
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header('Content-Type: application/json; charset=UTF-8');
