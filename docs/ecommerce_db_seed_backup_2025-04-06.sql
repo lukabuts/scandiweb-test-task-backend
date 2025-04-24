@@ -38,7 +38,7 @@ CREATE TABLE `attribute_item` (
 
 LOCK TABLES `attribute_item` WRITE;
 /*!40000 ALTER TABLE `attribute_item` DISABLE KEYS */;
-INSERT INTO `attribute_item` VALUES (1,'1T'),(7,'256GB'),(3,'40'),(3,'41'),(3,'42'),(3,'43'),(1,'512GB'),(7,'512GB'),(2,'Black'),(2,'Blue'),(2,'Cyan'),(6,'Extra Large'),(2,'Green'),(6,'Large'),(6,'Medium'),(4,'No'),(5,'No'),(6,'Small'),(2,'White'),(4,'Yes'),(5,'Yes');
+INSERT INTO `attribute_item` VALUES (1,'1T'),(7,'256GB'),(3,'40'),(3,'41'),(3,'42'),(3,'43'),(1,'512G'),(7,'512GB'),(2,'Black'),(2,'Blue'),(2,'Cyan'),(6,'Extra Large'),(2,'Green'),(6,'Large'),(6,'Medium'),(4,'No'),(5,'No'),(6,'Small'),(2,'White'),(4,'Yes'),(5,'Yes');
 /*!40000 ALTER TABLE `attribute_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -61,7 +61,7 @@ CREATE TABLE `attribute_order` (
   CONSTRAINT `attribute_order_ibfk_1` FOREIGN KEY (`attribute_id`) REFERENCES `attributes` (`id`) ON DELETE CASCADE,
   CONSTRAINT `attribute_order_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
   CONSTRAINT `attribute_order_ibfk_3` FOREIGN KEY (`item_id`) REFERENCES `items` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=121 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=289 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,6 +70,7 @@ CREATE TABLE `attribute_order` (
 
 LOCK TABLES `attribute_order` WRITE;
 /*!40000 ALTER TABLE `attribute_order` DISABLE KEYS */;
+INSERT INTO `attribute_order` VALUES (267,7,202,'256GB'),(268,4,202,'No'),(269,5,202,'No'),(270,3,203,'42'),(271,3,204,'42'),(272,3,205,'42'),(273,6,206,'Medium'),(274,6,207,'Medium'),(275,6,208,'Medium'),(276,7,211,'256GB'),(277,4,211,'No'),(278,5,211,'No'),(279,7,213,'256GB'),(280,4,213,'No'),(281,5,213,'No'),(282,1,214,'1T'),(283,2,214,'Black'),(284,1,215,'1T'),(285,2,215,'Black'),(286,1,217,'1T'),(287,2,217,'Black'),(288,3,218,'40');
 /*!40000 ALTER TABLE `attribute_order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,7 +141,7 @@ CREATE TABLE `attributes` (
   PRIMARY KEY (`id`),
   KEY `type_id` (`type_id`),
   CONSTRAINT `attributes_ibfk_2` FOREIGN KEY (`type_id`) REFERENCES `attribute_types` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -149,7 +150,7 @@ CREATE TABLE `attributes` (
 
 LOCK TABLES `attributes` WRITE;
 /*!40000 ALTER TABLE `attributes` DISABLE KEYS */;
-INSERT INTO `attributes` VALUES (1,'Capacity',1),(2,'Color',2),(3,'Size',1),(4,'Touch ID in keyboard',1),(5,'With USB 3 ports',1),(6,'Size',1),(7,'Capacity',1);
+INSERT INTO `attributes` VALUES (1,'Capacity',1),(2,'Color',2),(3,'Size',1),(4,'Touch ID in keyboard',1),(5,'With USB 3 ports',1),(6,'Size',1),(7,'Capacity',1),(8,'Capacity',1);
 /*!40000 ALTER TABLE `attributes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -248,7 +249,7 @@ CREATE TABLE `items` (
 
 LOCK TABLES `items` WRITE;
 /*!40000 ALTER TABLE `items` DISABLE KEYS */;
-INSERT INTO `items` VALUES ('1T','1T','1T'),('256GB','256GB','256GB'),('40','40','40'),('41','41','41'),('42','42','42'),('43','43','43'),('512GB','512GB','512GB'),('Black','Black','#000000'),('Blue','Blue','#030BFF'),('Cyan','Cyan','#03FFF7'),('Extra Large','Extra Large','XL'),('Green','Green','#44FF03'),('Large','Large','L'),('Medium','Medium','M'),('No','No','No'),('Small','Small','S'),('White','White','#FFFFFF'),('Yes','Yes','Yes');
+INSERT INTO `items` VALUES ('1T','1T','1T'),('256GB','256GB','256GB'),('40','40','40'),('41','41','41'),('42','42','42'),('43','43','43'),('512G','512G','512G'),('512GB','512GB','512GB'),('Black','Black','#000000'),('Blue','Blue','#030BFF'),('Cyan','Cyan','#03FFF7'),('Extra Large','Extra Large','XL'),('Green','Green','#44FF03'),('Large','Large','L'),('Medium','Medium','M'),('No','No','No'),('Small','Small','S'),('White','White','#FFFFFF'),('Yes','Yes','Yes');
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -272,7 +273,7 @@ CREATE TABLE `orders` (
   KEY `fk_orders_currency` (`currency_id`),
   CONSTRAINT `fk_orders_currency` FOREIGN KEY (`currency_id`) REFERENCES `currencies` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=219 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -281,6 +282,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (202,1688.03,'2025-04-19 12:58:33','2025-04-19 12:58:33','apple-imac-2021',1,1),(203,144.69,'2025-04-19 12:58:33','2025-04-19 12:58:33','huarache-x-stussy-le',1,1),(204,144.69,'2025-04-19 12:58:45','2025-04-19 12:58:45','huarache-x-stussy-le',1,1),(205,144.69,'2025-04-19 12:58:46','2025-04-19 12:58:46','huarache-x-stussy-le',1,1),(206,518.47,'2025-04-19 13:01:46','2025-04-19 13:01:46','jacket-canada-goosee',1,1),(207,518.47,'2025-04-19 13:01:50','2025-04-19 13:01:50','jacket-canada-goosee',1,1),(208,518.47,'2025-04-19 13:01:51','2025-04-19 13:01:51','jacket-canada-goosee',1,1),(209,120.57,'2025-04-22 09:36:43','2025-04-22 09:36:43','apple-airtag',1,1),(210,120.57,'2025-04-22 09:44:37','2025-04-22 09:44:37','apple-airtag',1,1),(211,1688.03,'2025-04-22 09:44:50','2025-04-22 09:44:50','apple-imac-2021',1,1),(212,361.71,'2025-04-22 11:09:29','2025-04-22 11:09:29','apple-airtag',3,1),(213,3376.06,'2025-04-22 11:09:29','2025-04-22 11:09:29','apple-imac-2021',2,1),(214,1000.76,'2025-04-22 11:09:29','2025-04-22 11:09:29','apple-iphone-12-pro',1,1),(215,844.02,'2025-04-22 11:09:29','2025-04-22 11:09:29','ps-5',1,1),(216,361.71,'2025-04-23 08:57:24','2025-04-23 08:57:24','apple-airtag',3,1),(217,1000.76,'2025-04-23 08:57:24','2025-04-23 08:57:24','apple-iphone-12-pro',1,1),(218,144.69,'2025-04-23 08:57:24','2025-04-23 08:57:24','huarache-x-stussy-le',1,1);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -356,4 +358,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-06 23:49:03
+-- Dump completed on 2025-04-24 19:30:26
