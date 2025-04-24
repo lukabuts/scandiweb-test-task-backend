@@ -4,15 +4,18 @@ namespace App\Config;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Dotenv\Dotenv;
+use PDOException;
+use Exception;
 
 class Database
 {
-    private static $connection = null;
+    private static ?Capsule $connection = null;
 
     public static function getConnection(): Capsule
     {
         if (self::$connection === null) {
             try {
+                // Load environment variables
                 $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
                 $dotenv->load();
 
@@ -33,12 +36,13 @@ class Database
                 $capsule->bootEloquent();
 
                 self::$connection = $capsule;
-            } catch (\Exception $e) {
-                echo json_encode([
-                    'status' => 'Database connection failed:',
-                    'message' => $e->getMessage()
-                ]);
-                exit;
+
+            } catch (PDOException $e) {
+                // Database-specific errors
+                self::handleDatabaseError($e);
+            } catch (Exception $e) {
+                // General errors
+                self::handleGenericError($e);
             }
         }
 
@@ -48,5 +52,39 @@ class Database
     public static function closeConnection(): void
     {
         self::$connection = null;
+    }
+
+    private static function handleDatabaseError(PDOException $e): void
+    {
+        $isDebug = filter_var($_ENV['APP_DEBUG'] ?? false, FILTER_VALIDATE_BOOLEAN);
+        $message = $isDebug ? $e->getMessage() : 'Database service unavailable';
+
+        // Log full error details
+        error_log('Database Connection PDOException: ' . $e->getMessage());
+        
+        // Secure response
+        http_response_code(503);
+        header('Content-Type: application/json');
+        echo json_encode([
+            'status' => 'error',
+            'message' => $message,
+            'code' => $e->getCode()
+        ]);
+        exit;
+    }
+
+    private static function handleGenericError(Exception $e): void
+    {
+        // Log full error details
+        error_log('Database Connection Exception: ' . $e->getMessage());
+        
+        // Secure response
+        http_response_code(500);
+        header('Content-Type: application/json');
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Service unavailable'
+        ]);
+        exit;
     }
 }
